@@ -24,10 +24,12 @@ public class App {
             Map<String, String> map = new HashMap<>();
 
             String username = req.queryParams("username");
-            logic.addWaiter(username);
+            String day = req.queryParams("monday");
+//            logic.addWaiter(username);
+            logic.addWaiterDetail(username, day);
 
             map.put("name", username);
-//            logic.submitDetails(username);
+            map.put("day", day);
             return new ModelAndView(map, "waiter.handlebars");
 
         }, new HandlebarsTemplateEngine());
