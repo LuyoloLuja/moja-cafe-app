@@ -1,3 +1,5 @@
+package net.moja.cafe;
+
 import spark.ModelAndView;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
