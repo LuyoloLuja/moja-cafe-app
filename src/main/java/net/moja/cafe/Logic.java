@@ -36,16 +36,6 @@ public class Logic {
         }
     }
 
-//    public void addWaiter(String name) {
-//        try {
-//            insertUsername = connection.prepareStatement(insertName);
-//            insertUsername.setString(1, name);
-//            insertUsername.executeUpdate();
-//        } catch(SQLException e) {
-//            e.printStackTrace();
-//        }
-//    }
-
     String insertDetailsQuery = "INSERT INTO Waiter_Shift (waiter_id, day_id) VALUES (?, ?)";
     PreparedStatement insertDetails;
 
