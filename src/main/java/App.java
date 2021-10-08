@@ -7,8 +7,15 @@ import java.util.Map;
 import static spark.Spark.*;
 
 public class App {
+    static int getHerokuAssignedPort() {
+        ProcessBuilder processBuilder = new ProcessBuilder();
+        if (processBuilder.environment().get("PORT") != null) {
+            return Integer.parseInt(processBuilder.environment().get("PORT"));
+        }
+        return 2021; //return default port if heroku-port isn't set (i.e. on localhost)
+    }
     public static void main(String[] args) {
-        port(2021);
+        port(getHerokuAssignedPort());
         Spark.staticFiles.location("/public");
         Logic logic = new Logic("jdbc:sqlite:mojaCafeDB.db");
 //        Map<String, Object> map = new HashMap<>();
