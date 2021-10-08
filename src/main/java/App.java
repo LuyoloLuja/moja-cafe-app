@@ -37,11 +37,6 @@ public class App {
 
             String name = req.queryParams("username");
 
-//            System.out.println(map);
-//            for (String names: map.keySet()) {
-//                System.out.println(names);
-//            }
-
             return new ModelAndView(map, "waiter.handlebars");
         }, new HandlebarsTemplateEngine());
 
@@ -52,7 +47,6 @@ public class App {
 
         get("/", (req, res) -> {
            Map<String, Object> map = new HashMap<>();
-            String nameL = req.queryParams("username");
            return new ModelAndView(map, "home.handlebars");
         }, new HandlebarsTemplateEngine());
 
