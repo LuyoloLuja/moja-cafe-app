@@ -15,17 +15,10 @@ public class Logic {
             connection = DriverManager.getConnection(connectionString);
             Statement statement = connection.createStatement();
 
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS Waiter (name TEXT)");
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS Day (day TEXT)");
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS Shift_Type (Morning TEXT, Afternoon TEXT)");
-            statement.executeUpdate("" +
-                    "CREATE TABLE IF NOT EXISTS Waiter_Shift (" +
-                    "waiter_id INT," +
-                    "day_id INT," +
-                    "shift_type_id INT," +
-                    "FOREIGN KEY (waiter_id) REFERENCES Waiter(id)" +
-                    "FOREIGN KEY (day_id) REFERENCES Day(id)" +
-                    "FOREIGN KEY (shift_type_id) REFERENCES Shift_Type(id))");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS Waiter (id INTEGER NOT NULL PRIMARY KEY, name TEXT)");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS Day (id INTEGER NOT NULL PRIMARY KEY, day TEXT)");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS Shift_Type (id INTEGER NOT NULL PRIMARY KEY, name TEXT)");
+            statement.executeUpdate("CREATE TABLE IF NOT EXISTS Waiter_Shift (id INTEGER NOT NULL PRIMARY KEY, waiter_id INTEGER, day_id INTEGER, FOREIGN KEY (waiter_id) REFERENCES Waiter(id), FOREIGN KEY (day_id) REFERENCES Day(id))");
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -41,6 +34,7 @@ public class Logic {
 //            e.printStackTrace();
 //        }
 //    }
+
     String insertDetailsQuery = "INSERT INTO Waiter_Shift (waiter_id, day_id) VALUES (?, ?)";
     PreparedStatement insertDetails;
 

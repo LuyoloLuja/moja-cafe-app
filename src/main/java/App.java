@@ -54,10 +54,3 @@ public class App {
 
     }
 }
-//            statement.executeUpdate("INSERT INTO Day (day_working) VALUES ('Monday')");
-//            statement.executeUpdate("INSERT INTO Day (day_working) VALUES ('Tuesday')");
-//            statement.executeUpdate("INSERT INTO Day (day_working) VALUES ('Wednesday')");
-//            statement.executeUpdate("INSERT INTO Day (day_working) VALUES ('Thursday')");
-//            statement.executeUpdate("INSERT INTO Day (day_working) VALUES ('Friday')");
-//            statement.executeUpdate("INSERT INTO Day (day_working) VALUES ('Saturday')");
-//            statement.executeUpdate("INSERT INTO Day (day_working) VALUES ('Sunday')");
