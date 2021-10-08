@@ -1,50 +1,60 @@
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.SQLException;
-import java.sql.Statement;
+import spark.ModelAndView;
+import spark.Spark;
+import spark.template.handlebars.HandlebarsTemplateEngine;
+import java.util.HashMap;
+import java.util.Map;
 
 import static spark.Spark.*;
 
 public class App {
     public static void main(String[] args) {
         port(2021);
-        staticFiles.location("/public");
-        Connect.connect();
-        Connection connection;
-        try {
-            connection = DriverManager.getConnection("jdbc:sqlite:mojaCafeDB.db");
-            Statement statement = connection.createStatement();
+        Spark.staticFiles.location("/public");
+        Logic logic = new Logic("jdbc:sqlite:mojaCafeDB.db");
+//        Map<String, Object> map = new HashMap<>();
 
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS Waiter (id INT PRIMARY KEY, name TEXT)");
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS Day (id INT PRIMARY KEY, day_working TEXT, order_column TEXT)");
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS Shift (id INT PRIMARY KEY, morning_shift TEXT, afternoon_shift TEXT, day_id INT, FOREIGN KEY (day_id) REFERENCES Day(id))");
+        post("/waiter", (req, res) -> {
+            Map<String, String> map = new HashMap<>();
 
-            statement.executeUpdate(
-                    "CREATE TABLE IF NOT EXISTS Waiter_Shift " +
-                            "(id INT PRIMARY KEY, " +
-                            "shift_id INT, " +
-                            "waiter_id INT, " +
-                            "FOREIGN KEY (waiter_id) REFERENCES Waiter(id), " +
-                            "FOREIGN KEY (shift_id) REFERENCES Shift(id))");
+            String username = req.queryParams("username");
+            logic.addWaiter(username);
 
-            statement.executeUpdate("INSERT INTO Day (day_working) VALUES ('Monday')");
-            statement.executeUpdate("INSERT INTO Day (day_working) VALUES ('Tuesday')");
-            statement.executeUpdate("INSERT INTO Day (day_working) VALUES ('Wednesday')");
-            statement.executeUpdate("INSERT INTO Day (day_working) VALUES ('Thursday')");
-            statement.executeUpdate("INSERT INTO Day (day_working) VALUES ('Friday')");
-            statement.executeUpdate("INSERT INTO Day (day_working) VALUES ('Saturday')");
-            statement.executeUpdate("INSERT INTO Day (day_working) VALUES ('Sunday')");
+            map.put("name", username);
+//            logic.submitDetails(username);
+            return new ModelAndView(map, "waiter.handlebars");
 
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        }, new HandlebarsTemplateEngine());
 
-        get("/waiter/:username", (req, res) -> {
-            return "Waiter";
-        });
-        post("/waiter/:username", (req, res) -> {
-            return "";
-        });
+        get("/waiter", (req, res) -> {
+            Map<String, Object> map = new HashMap<>();
+
+            String name = req.queryParams("username");
+
+//            System.out.println(map);
+//            for (String names: map.keySet()) {
+//                System.out.println(names);
+//            }
+
+            return new ModelAndView(map, "waiter.handlebars");
+        }, new HandlebarsTemplateEngine());
+
+        get("/shift", (req, res) -> {
+            Map<String, Object> map = new HashMap<>();
+            return new ModelAndView(map, "shift.handlebars");
+        }, new HandlebarsTemplateEngine());
+
+        get("/", (req, res) -> {
+           Map<String, Object> map = new HashMap<>();
+            String nameL = req.queryParams("username");
+           return new ModelAndView(map, "home.handlebars");
+        }, new HandlebarsTemplateEngine());
 
     }
 }
+//            statement.executeUpdate("INSERT INTO Day (day_working) VALUES ('Monday')");
+//            statement.executeUpdate("INSERT INTO Day (day_working) VALUES ('Tuesday')");
+//            statement.executeUpdate("INSERT INTO Day (day_working) VALUES ('Wednesday')");
+//            statement.executeUpdate("INSERT INTO Day (day_working) VALUES ('Thursday')");
+//            statement.executeUpdate("INSERT INTO Day (day_working) VALUES ('Friday')");
+//            statement.executeUpdate("INSERT INTO Day (day_working) VALUES ('Saturday')");
+//            statement.executeUpdate("INSERT INTO Day (day_working) VALUES ('Sunday')");

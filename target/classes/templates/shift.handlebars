@@ -1,0 +1,164 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Shifts</title>
+
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            color: #073140;
+            box-sizing: border-box;
+            height: 100vh;
+            background-attachment: fixed;
+            font-family: Roboto, sans-serif, serif;
+        }
+        .container {
+            width: 70%;
+            margin: 5em auto;
+        }
+        header {
+            display: flex;
+            width: 40%;
+            align-items: center;
+            justify-content: space-between;
+            margin: 4em auto;
+        }
+        header h1 { font-size: 54px }
+        table {
+            width: 70%;
+            margin: 0 auto;
+            border-collapse: collapse;
+        }
+        table .details td {
+            border: none;
+        }
+        table .blue-bar td {
+            background-color: #188AB2;
+            padding: 1em;
+            border-radius: 1em;
+            border-bottom: none;
+        }
+        table tr td ul {
+            text-align: center;
+            list-style: none;
+            margin: 0;
+            padding: 1em;
+            border-left: 2px solid #073140;
+            border-right: 2px solid #073140;
+        }
+        table tr td ul li {
+            display: inline;
+            padding: 1em 1em 0 0;
+        }
+        table .waiter-days {
+            text-align: center;
+            border-bottom: 2px solid #073140;
+        }
+        .key {
+            margin-bottom: 2em;
+        }
+        .key .example {
+            width: 10px;
+            height: 10px;
+            display: inline-block;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+        button {
+            border: none;
+            background-color: #7FC086;
+            color: #073140;
+            margin: 2em auto;
+            padding: 1em 4.5em;
+            text-align: center;
+            display: block;
+            font-size:18px;
+            border-radius: 1em;
+            cursor: pointer;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <header>
+        <div></div>
+        <h1>Shifts</h1>
+        <div class="key">
+        <div>
+            <div class="example" style="background-color: #ff0000;"></div>Not Working
+        </div>
+        <div>
+             <div class="example" style="background-color: #008000;"></div>Working
+        </div>
+    </div>
+    </header>
+
+    <table>
+        <tr class="details">
+            <td>Employee Name</td>
+            <td style="text-align: center;">Days</td>
+            <td>Hours/Day</td>
+            <td>Hours/Week</td>
+        </tr>
+        <tr class="blue-bar">
+            <td colspan=4></td>
+        </tr>
+        <tr class="waiter-days">
+            <td>Luyolo</td>
+            <td>
+                <ul>
+                    <li>Monday</li>
+                    <li>Tuesday</li>
+                    <li>Wednesday</li>
+                    <li>Thursday</li>
+                    <li>Friday</li>
+                    <li>Saturday</li>
+                    <li>Sunday</li>
+                </ul>
+            </td>
+            <td>18</td>
+            <td>9</td>
+        </tr>
+        <tr class="waiter-days">
+            <td>Salizwa</td>
+            <td>
+                <ul>
+                    <li>Monday</li>
+                    <li>Tuesday</li>
+                    <li>Wednesday</li>
+                    <li>Thursday</li>
+                    <li>Friday</li>
+                    <li>Saturday</li>
+                    <li>Sunday</li>
+                </ul>
+            </td>
+            <td>36</td>
+            <td>9</td>
+        </tr>
+        <tr class="waiter-days">
+            <td>Simthe</td>
+            <td>
+                <ul>
+                    <li>Monday</li>
+                    <li>Tuesday</li>
+                    <li>Wednesday</li>
+                    <li>Thursday</li>
+                    <li>Friday</li>
+                    <li>Saturday</li>
+                    <li>Sunday</li>
+                </ul>
+            </td>
+            <td>45</td>
+            <td>9</td>
+        </tr>
+    </table>
+
+    <button type="submit">Back</button>
+</div>
+</body>
+</html>

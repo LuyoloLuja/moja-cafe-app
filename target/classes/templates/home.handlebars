@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Add Shifts</title>
+
+    <style>
+        .key {
+            margin-bottom: 2em;
+        }
+        .key .example {
+            width: 10px;
+            height: 10px;
+            display: inline-block;
+            border-radius: 50%;
+            margin-right: 5px;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+        <h1>Moja Cafe'</h1>
+
+        <div class="key">
+            <div>
+                <div class="example" style="background-color: #ff0000;"></div>Fully Booked
+            </div>
+            <div>
+                <div class="example" style="background-color: #ffa500;"></div>Almost Fully Booked
+            </div>
+            <div>
+                <div class="example" style="background-color: #008000;"></div>Space Available
+            </div>
+        </div>
+
+    <form action="/waiter" method="post">
+        <input type="text" value="{{name}}" name="username">
+
+        <table>
+            <th>Time Punches</th>
+            <tr>
+                <td>Days</td>
+                <td>Time Punches</td>
+            </tr>
+            <tr>
+                <td>Monday</td>
+                <td>
+                    <input type="radio" name="monday" value="monday-morning-shift"><span>06h00 - 14h00</span>
+                    <input type="radio" name="monday" value="monday-afternoon-shift"><span>14h00 - 20h00</span>
+                </td>
+            </tr>
+            <tr>
+                <td>Tuesday</td>
+                <td>
+                    <input type="radio" name="tuesday" value="tuesday-morning-shift"><span>06h00 - 14h00</span>
+                    <input type="radio" name="tuesday" value="tuesday-afternoon-shift"><span>14h00 - 20h00</span>
+                </td>
+            </tr>
+            <tr>
+                <td>Wednesday</td>
+                <td>
+                    <input type="radio" name="wednesday" value="wednesday-morning-shift"><span>06h00 - 14h00</span>
+                    <input type="radio" name="wednesday" value="wednesday-afternoon-shift"><span>14h00 - 20h00</span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Thursday</td>
+                <td>
+                    <input type="radio" name="thursday" value="thursday-morning-shift"><span>06h00 - 14h00</span>
+                    <input type="radio" name="thursday" value="thursday-afternoon-shift"><span>14h00 - 20h00</span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Friday</td>
+                <td>
+                    <input type="radio" name="friday" value="friday-morning-shift"><span>06h00 - 14h00</span>
+                    <input type="radio" name="friday" value="friday-afternoon-shift"><span>14h00 - 20h00</span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Saturday</td>
+                <td>
+                    <input type="radio" name="saturday" value="saturday-morning-shift"><span>06h00 - 14h00</span>
+                    <input type="radio" name="saturday" value="saturday-afternoon-shift"><span>14h00 - 20h00</span>
+                </td>
+            </tr>
+
+            <tr>
+                <td>Sunday</td>
+                <td>
+                    <input type="radio" name="sunday" value="sunday-morning-shift"><span>06h00 - 14h00</span>
+                    <input type="radio" name="sunday" value="sunday-afternoon-shift"><span>14h00 - 20h00</span>
+                </td>
+            </tr>
+        </table>
+        <button type="submit">Submit</button>
+    </form>
+
+        <form action="/shift" method="get">
+            <button type="submit">View Shifts</button>
+        </form>
+
+<!--        <form action="/waiter" method="get">-->
+<!--            <button type="submit">Submit</button>-->
+<!--        </form>-->
+</div>
+</body>
+</html>
