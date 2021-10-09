@@ -10,31 +10,40 @@
 <body>
 <div class="container">
     <form action="/waiter" method="get">
-        <h1>Luyolo's Shifts</h1>
+        <h1>{{name}}'s Shifts</h1>
+<!--        <table>-->
+<!--            <tr>-->
+<!--                <td>Days Working</td>-->
+<!--                <td>Shifts Working</td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>Tuesday</td>-->
+<!--                <td>-->
+<!--                    <span>06h00 - 14h00</span>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>Wednesday</td>-->
+<!--                <td>-->
+<!--                    <span>06h00 - 14h00</span>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--            <tr>-->
+<!--                <td>Friday</td>-->
+<!--                <td>-->
+<!--                    <span>14h00 - 20h00</span>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--        </table>-->
         <table>
-            <tr>
-                <td>Days Working</td>
-                <td>Shifts Working</td>
+        <tr>
+            {{#each waiterDetails}}
+                <th>{{this.day}}</th>
+                <td>{{this.name}}</td>
             </tr>
-            <tr>
-                <td>Tuesday</td>
-                <td>
-                    <span>06h00 - 14h00</span>
-                </td>
-            </tr>
-            <tr>
-                <td>Wednesday</td>
-                <td>
-                    <span>06h00 - 14h00</span>
-                </td>
-            </tr>
-            <tr>
-                <td>Friday</td>
-                <td>
-                    <span>14h00 - 20h00</span>
-                </td>
-            </tr>
+            {{/each}}
         </table>
+
         <button type="submit">Back</button>
     </form>
 
