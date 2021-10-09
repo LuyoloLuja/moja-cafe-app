@@ -6,10 +6,6 @@ public class Logic {
     String connectionString;
     Connection connection = null;
 
-    String insertName = "INSERT INTO Waiter (name) VALUES (?)";
-
-    PreparedStatement insertUsername;
-
     public Logic(String connectionString) {
 
         try {
@@ -37,20 +33,30 @@ public class Logic {
     }
 
     String insertDetailsQuery = "INSERT INTO Waiter_Shift (waiter_id, day_id) VALUES (?, ?)";
-    PreparedStatement insertDetails;
+    String insertNameQuery = "INSERT INTO Waiter (name) VALUES (?)";
+    String getDayIdQuery = "SELECT id FROM Waiter_Shift WHERE day_id = (?)";
+    PreparedStatement preparedStatement;
 
     public void addWaiterDetail(String name, String day) throws SQLException {
-        insertDetails = connection.prepareStatement(insertDetailsQuery);
-        insertDetails.setString(1, name);
-        insertDetails.setString(2, day);
-        insertDetails.executeUpdate();
+
+        insertName(name);
+        int daysId = getDay(day);
+
+        preparedStatement = connection.prepareStatement(insertDetailsQuery);
+        preparedStatement.setString(1, name);
+        preparedStatement.setInt(2, daysId);
+        preparedStatement.executeUpdate();
     }
 
-    String getDayIdQuery = "SELECT Day WHERE day = (?)";
-    PreparedStatement getDayId;
-    public void getDayId(String day) throws SQLException {
-        getDayId = connection.prepareStatement(getDayIdQuery);
-        getDayId.setString(1, day);
-        getDayId.executeUpdate();
+    public void insertName(String name) throws SQLException {
+        preparedStatement = connection.prepareStatement(insertNameQuery);
+        preparedStatement.setString(1, name);
+        preparedStatement.executeUpdate();
+    }
+
+    public int getDay(String day) throws SQLException {
+        preparedStatement = connection.prepareStatement(getDayIdQuery);
+        preparedStatement.setString(1, day);
+        return preparedStatement.executeUpdate();
     }
 }
