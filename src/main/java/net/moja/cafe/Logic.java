@@ -1,62 +1,54 @@
 package net.moja.cafe;
 
-import java.sql.*;
+import org.jdbi.v3.core.Handle;
+import org.jdbi.v3.core.Jdbi;
+
+import javax.management.Query;
 
 public class Logic {
-    String connectionString;
-    Connection connection = null;
 
-    public Logic(String connectionString) {
+    String dbDiskURL = "jdbc:sqlite:file:./mojaCafeDB.db";
+    Jdbi jdbi = Jdbi.create(dbDiskURL);
+    Handle handle = jdbi.open();
 
-        try {
-            this.connectionString = connectionString;
-            connection = DriverManager.getConnection(connectionString);
-            Statement statement = connection.createStatement();
+    public Logic() {
+            handle.execute("CREATE TABLE IF NOT EXISTS Waiter (id INTEGER NOT NULL PRIMARY KEY, name TEXT)");
+            handle.execute("CREATE TABLE IF NOT EXISTS Day (id INTEGER NOT NULL PRIMARY KEY, day TEXT)");
 
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS Waiter (id INTEGER NOT NULL PRIMARY KEY, name TEXT)");
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS Day (id INTEGER NOT NULL PRIMARY KEY, day TEXT)");
-            statement.executeUpdate("CREATE TABLE IF NOT EXISTS Shift_Type (id INTEGER NOT NULL PRIMARY KEY, name TEXT)");
-            statement.executeUpdate(
-                    "CREATE TABLE IF NOT EXISTS Waiter_Shift " +
-                            "(id INTEGER NOT NULL PRIMARY KEY, " +
-                            "waiter_id INTEGER, " +
-                            "day_id INTEGER, " +
-                            "shift_type_id INTEGER, " +
-                            "FOREIGN KEY (waiter_id) REFERENCES Waiter(id), " +
-                            "FOREIGN KEY (day_id) REFERENCES Day(id) " +
-                            "FOREIGN KEY (shift_type_id) " +
-                            "REFERENCES Shift_Type(id))");
-
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+            handle.execute("CREATE TABLE IF NOT EXISTS Waiter_Shift " +
+                    "(id INTEGER NOT NULL PRIMARY KEY, " +
+                    "waiter_id INTEGER, day_id INTEGER, " +
+                    "FOREIGN KEY (waiter_id) REFERENCES Waiter(id), " +
+                    "FOREIGN KEY (day_id) REFERENCES Day(id))");
     }
 
-    String insertDetailsQuery = "INSERT INTO Waiter_Shift (waiter_id, day_id) VALUES (?, ?)";
-    String insertNameQuery = "INSERT INTO Waiter (name) VALUES (?)";
-    String getDayIdQuery = "SELECT id FROM Waiter_Shift WHERE day_id = (?)";
-    PreparedStatement preparedStatement;
+    public void addWaiterDetails(String name, String day) {
+        name = name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
 
-    public void addWaiterDetail(String name, String day) throws SQLException {
+        int nameId = getNameId(name);
+        int dayId = getDayId(day);
 
-        insertName(name);
-        int daysId = getDay(day);
-
-        preparedStatement = connection.prepareStatement(insertDetailsQuery);
-        preparedStatement.setString(1, name);
-        preparedStatement.setInt(2, daysId);
-        preparedStatement.executeUpdate();
+        handle.execute("INSERT INTO Waiter_Shift (waiter_id, day_id) VALUES (?, ?)", nameId, dayId);
     }
 
-    public void insertName(String name) throws SQLException {
-        preparedStatement = connection.prepareStatement(insertNameQuery);
-        preparedStatement.setString(1, name);
-        preparedStatement.executeUpdate();
+    public int getNameId(String name) {
+        name = name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
+
+        handle.execute("INSERT INTO Waiter (name) VALUES (?)", name);
+        return handle.execute("SELECT id FROM Waiter WHERE name = ?", name);
     }
 
-    public int getDay(String day) throws SQLException {
-        preparedStatement = connection.prepareStatement(getDayIdQuery);
-        preparedStatement.setString(1, day);
-        return preparedStatement.executeUpdate();
+    public int getDayId(String day) {
+        return handle.execute("SELECT id FROM Day WHERE day = ?" , day);
+    }
+
+    public String getWaiterDetails() {
+        handle.execute(
+                "SELECT DISTINCT Waiter.id, name, " +
+                        "Day.id FROM Waiter_Shift " +
+                        "JOIN Waiter ON" +
+                        " Waiter_Shift.id = Waiter.id " +
+                        "JOIN Day ON Waiter_Shift.day_id = Day.id;");
+        return null;
     }
 }

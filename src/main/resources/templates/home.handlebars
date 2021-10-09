@@ -37,66 +37,21 @@
         <input type="text" value="{{name}}" name="username">
 
         <table>
-            <th>Time Punches</th>
             <tr>
-                <td>Days</td>
-                <td>Time Punches</td>
+                <td><input type="checkbox" name="day" value="Monday">Monday</td>
+                <td><input type="checkbox" name="day" value="Tuesday">Tuesday</td>
+                <td><input type="checkbox" name="day" value="Wednesday">Wednesday</td>
             </tr>
             <tr>
-                <td>Monday</td>
-                <td>
-                    <input type="radio" name="monday" value="monday-morning-shift"><span>06h00 - 14h00</span>
-                    <input type="radio" name="monday" value="monday-afternoon-shift"><span>14h00 - 20h00</span>
-                </td>
+                <td><input type="checkbox" name="day" value="Thursday">Thursday</td>
+                <td><input type="checkbox" name="day" value="Friday">Friday</td>
+                <td><input type="checkbox" name="day" value="Saturday">Saturday</td>
             </tr>
             <tr>
-                <td>Tuesday</td>
-                <td>
-                    <input type="radio" name="tuesday" value="tuesday-morning-shift"><span>06h00 - 14h00</span>
-                    <input type="radio" name="tuesday" value="tuesday-afternoon-shift"><span>14h00 - 20h00</span>
-                </td>
-            </tr>
-            <tr>
-                <td>Wednesday</td>
-                <td>
-                    <input type="radio" name="wednesday" value="wednesday-morning-shift"><span>06h00 - 14h00</span>
-                    <input type="radio" name="wednesday" value="wednesday-afternoon-shift"><span>14h00 - 20h00</span>
-                </td>
-            </tr>
-
-            <tr>
-                <td>Thursday</td>
-                <td>
-                    <input type="radio" name="thursday" value="thursday-morning-shift"><span>06h00 - 14h00</span>
-                    <input type="radio" name="thursday" value="thursday-afternoon-shift"><span>14h00 - 20h00</span>
-                </td>
-            </tr>
-
-            <tr>
-                <td>Friday</td>
-                <td>
-                    <input type="radio" name="friday" value="friday-morning-shift"><span>06h00 - 14h00</span>
-                    <input type="radio" name="friday" value="friday-afternoon-shift"><span>14h00 - 20h00</span>
-                </td>
-            </tr>
-
-            <tr>
-                <td>Saturday</td>
-                <td>
-                    <input type="radio" name="saturday" value="saturday-morning-shift"><span>06h00 - 14h00</span>
-                    <input type="radio" name="saturday" value="saturday-afternoon-shift"><span>14h00 - 20h00</span>
-                </td>
-            </tr>
-
-            <tr>
-                <td>Sunday</td>
-                <td>
-                    <input type="radio" name="sunday" value="sunday-morning-shift"><span>06h00 - 14h00</span>
-                    <input type="radio" name="sunday" value="sunday-afternoon-shift"><span>14h00 - 20h00</span>
-                </td>
+                <td><input type="checkbox" name="day" value="Sunday">Sunday</td>
+                <td colspan="2"><button type="submit" name="addBtn">Submit</button></td>
             </tr>
         </table>
-        <button type="submit">Submit</button>
     </form>
 
         <form action="/shift" method="get">

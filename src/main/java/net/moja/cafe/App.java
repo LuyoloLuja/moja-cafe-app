@@ -1,9 +1,12 @@
 package net.moja.cafe;
 
+import org.jdbi.v3.core.Handle;
+import org.jdbi.v3.core.Jdbi;
 import spark.ModelAndView;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 import static spark.Spark.*;
@@ -16,22 +19,23 @@ public class App {
         }
         return 2021; //return default port if heroku-port isn't set (i.e. on localhost)
     }
+
     public static void main(String[] args) {
         port(getHerokuAssignedPort());
         Spark.staticFiles.location("/public");
-        Logic logic = new Logic("jdbc:sqlite:mojaCafeDB.db");
-//        Map<String, Object> map = new HashMap<>();
+        Logic logic = new Logic();
 
         post("/waiter", (req, res) -> {
             Map<String, String> map = new HashMap<>();
 
             String username = req.queryParams("username");
-            String day = req.queryParams("monday");
-//            logic.addWaiter(username);
-            logic.addWaiterDetail(username, day);
+            String day = req.queryParams("day");
+
+            logic.addWaiterDetails(username, day);
 
             map.put("name", username);
             map.put("day", day);
+            map.put("displayShifts", logic.getWaiterDetails());
             return new ModelAndView(map, "waiter.handlebars");
 
         }, new HandlebarsTemplateEngine());
