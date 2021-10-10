@@ -33,7 +33,7 @@
             </div>
         </div>
 
-    <form action="/waiter" method="post">
+    <form action="/waiter/:{{name}}" method="post">
         <input type="text" value="{{name}}" name="username">
 
         <table>
@@ -52,15 +52,36 @@
                 <td colspan="2"><button type="submit" name="addBtn">Submit</button></td>
             </tr>
         </table>
+<!--        {{#each weekDays}}-->
+<!--            <tr>-->
+<!--                <td>-->
+<!--                    <input type="checkbox" name="{{day}}" value="{{id}}"><span>Monday</span>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <input type="checkbox" name="{{day}}" value="{{id}}"><span>Tuesday</span>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <input type="checkbox" name="{{day}}" value="{{id}}"><span>Wednesday</span>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <input type="checkbox" name="{{day}}" value="{{id}}"><span>Thursday</span>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <input type="checkbox" name="{{day}}" value="{{id}}"><span>Friday</span>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <input type="checkbox" name="{{day}}" value="{{id}}"><span>Saturday</span>-->
+<!--                </td>-->
+<!--                <td>-->
+<!--                    <input type="checkbox" name="{{day}}" value="{{id}}"><span>Sunday</span>-->
+<!--                </td>-->
+<!--            </tr>-->
+<!--        {{/each}}-->
     </form>
 
         <form action="/shift" method="get">
             <button type="submit">View Shifts</button>
         </form>
-
-<!--        <form action="/waiter" method="get">-->
-<!--            <button type="submit">Submit</button>-->
-<!--        </form>-->
 </div>
 </body>
 </html>
