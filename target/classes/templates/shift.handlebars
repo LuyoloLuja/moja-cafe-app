@@ -158,17 +158,19 @@
 <!--        </tr>-->
 <!--    </table>-->
 
-    <table>
-    <tr>
-        {{#each displayShifts}}
-            <th>{{day}}</th>
-            <td>{{name}}</td>
-        </tr>
-        {{/each}}
+    <form action="/">
+        <table>
+        <tr>
+            {{#each displayShifts}}
+                <th>{{day}}</th>
+                <td>{{name}}</td>
+            </tr>
+            {{/each}}
 
-    </table>
+        </table>
 
-    <button type="submit">Back</button>
+        <button type="submit">Back</button>
+    </form>
 </div>
 </body>
 </html>

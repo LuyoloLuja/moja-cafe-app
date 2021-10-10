@@ -1,12 +1,9 @@
 package net.moja.cafe;
 
-import org.jdbi.v3.core.Handle;
-import org.jdbi.v3.core.Jdbi;
 import spark.ModelAndView;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 import static spark.Spark.*;
@@ -25,38 +22,48 @@ public class App {
         Spark.staticFiles.location("/public");
         Logic logic = new Logic();
 
+        get("/", (req, res) -> {
+            Map<String, Object> map = new HashMap<>();
+            return new ModelAndView(map, "home.handlebars");
+        }, new HandlebarsTemplateEngine());
+
         post("/waiter", (req, res) -> {
             Map<String, String> map = new HashMap<>();
 
             String username = req.queryParams("username");
             String day = req.queryParams("day");
+            username = username.substring(0,1).toUpperCase() + username.substring(1).toLowerCase();
 
-            logic.addWaiterDetails(username, day);
+            if (!username.equals("") && day != null) {
+                logic.addWaiterDetails(username, day);
+            }
 
             map.put("name", username);
             map.put("day", day);
-            map.put("displayShifts", logic.getWaiterDetails());
             return new ModelAndView(map, "waiter.handlebars");
 
         }, new HandlebarsTemplateEngine());
 
-        get("/waiter", (req, res) -> {
-            Map<String, Object> map = new HashMap<>();
+        get("/waiter/:username", (req, res) -> {
+            Map<String, String> map = new HashMap<>();
 
             String name = req.queryParams("username");
+            String day = req.queryParams("day");
+
+            logic.addWaiterDetails(name, day);
+//            int singleWaiterDetails = logic.getSingleWaiterDetails(name);
+//            map.put("singleWaiterDetails", singleWaiterDetails);
+            map.put("name", name);
 
             return new ModelAndView(map, "waiter.handlebars");
         }, new HandlebarsTemplateEngine());
 
         get("/shift", (req, res) -> {
             Map<String, Object> map = new HashMap<>();
+
+            map.put("displayShifts", logic.getWaiterDetails());
+
             return new ModelAndView(map, "shift.handlebars");
         }, new HandlebarsTemplateEngine());
-
-        get("/", (req, res) -> {
-           Map<String, Object> map = new HashMap<>();
-           return new ModelAndView(map, "home.handlebars");
-        }, new HandlebarsTemplateEngine());
-
     }
 }

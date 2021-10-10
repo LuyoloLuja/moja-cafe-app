@@ -3,8 +3,6 @@ package net.moja.cafe;
 import org.jdbi.v3.core.Handle;
 import org.jdbi.v3.core.Jdbi;
 
-import javax.management.Query;
-
 public class Logic {
 
     String dbDiskURL = "jdbc:sqlite:file:./mojaCafeDB.db";
@@ -34,7 +32,12 @@ public class Logic {
     public int getNameId(String name) {
         name = name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
 
-        handle.execute("INSERT INTO Waiter (name) VALUES (?)", name);
+        int checkDuplicates = handle.select("SELECT COUNT(*) FROM Waiter WHERE name = ?", name).mapTo(int.class).findOnly();
+
+        if (checkDuplicates == 0) {
+            handle.execute("INSERT INTO Waiter (name) VALUES (?)", name);
+        }
+
         return handle.execute("SELECT id FROM Waiter WHERE name = ?", name);
     }
 
@@ -51,4 +54,9 @@ public class Logic {
                         "JOIN Day ON Waiter_Shift.day_id = Day.id;");
         return null;
     }
+
+//    public int getSingleWaiterDetails(String name) {
+//        int waiterId = getNameId(name);
+//        return handle.execute("SELECT day_id FROM Waiter_Shift WHERE waiter_id = ?", waiterId);
+//    }
 }
