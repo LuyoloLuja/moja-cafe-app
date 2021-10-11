@@ -5,83 +5,106 @@
     <title>Add Shifts</title>
 
     <style>
-        .key {
-            margin-bottom: 2em;
-        }
-        .key .example {
-            width: 10px;
-            height: 10px;
-            display: inline-block;
-            border-radius: 50%;
-            margin-right: 5px;
-        }
+        body, html {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    color: #fff;
+    box-sizing: border-box;
+    height: 100vh;
+    background-attachment: fixed;
+}
+.container {
+    width: 80%;
+    height: 100%;
+    margin-left: auto;
+    margin-right: auto;
+}
+.container form {
+    width: 80%;
+    height: 100%;
+    margin: 5em auto;
+}
+.content {
+    background-color: #293745;
+    border-radius: 10px;
+    padding: 15px;
+    width: 80%;
+    height: 80%;
+    margin: 0 auto;
+}
+.content h1 {
+    font-size: 56px;
+    font-weight: lighter;
+    text-align: center;
+}
+.content label {
+    width: 80%;
+    margin: 0 auto;
+    display: block;
+}
+label input {
+    width: 50%;
+    margin: 8em auto 2em auto;
+    display: block;
+    padding: 6px;
+    border-radius: 4px;
+    border: none;
+    outline: none;
+}
+.container table {
+    border-collapse: collapse;
+    width: 80%;
+    margin: 0 auto;
+}
+.container table tr td {
+    border-bottom: 1px solid #fff;
+    padding: 20px;
+}
+button {
+    width: 100%;
+    padding: 10px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    background-color: #FDCE4B;
+    color: #293745;
+    cursor: pointer;
+}
+button:hover {
+    border: 1px solid #fff;
+}
+.container table input {
+    cursor: pointer;
+}
     </style>
 </head>
 <body>
 <div class="container">
-        <h1>Moja Cafe'</h1>
-
-        <div class="key">
-            <div>
-                <div class="example" style="background-color: #ff0000;"></div>Fully Booked
-            </div>
-            <div>
-                <div class="example" style="background-color: #ffa500;"></div>Almost Fully Booked
-            </div>
-            <div>
-                <div class="example" style="background-color: #008000;"></div>Space Available
-            </div>
+    <form action="/waiter/{{username}}" method="POST">
+        <div class="content">
+            <h1>Moja Cafe'</h1>
+            <label for="">
+                <input type="text" name="username" placeholder="Please Enter Your Name" value="{{username}}">
+            </label>
+            <table>
+                <tr>
+                    <td><input type="checkbox" name="day" value="Monday">Monday</td>
+                    <td><input type="checkbox" name="day" value="Tuesday">Tuesday</td>
+                    <td><input type="checkbox" name="day" value="Wednesday">Wednesday</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="day" value="Thursday">Thursday</td>
+                    <td><input type="checkbox" name="day" value="Friday">Friday</td>
+                    <td><input type="checkbox" name="day" value="Saturday">Saturday</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="day" value="Sunday">Sunday</td>
+                    <td colspan="2"><button type="submit">Submit</button></td>
+                </tr>
+            </table>
         </div>
-
-    <form action="/waiter/:{{name}}" method="post">
-        <input type="text" value="{{name}}" name="username">
-
-        <table>
-            <tr>
-                <td><input type="checkbox" name="day" value="Monday">Monday</td>
-                <td><input type="checkbox" name="day" value="Tuesday">Tuesday</td>
-                <td><input type="checkbox" name="day" value="Wednesday">Wednesday</td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" name="day" value="Thursday">Thursday</td>
-                <td><input type="checkbox" name="day" value="Friday">Friday</td>
-                <td><input type="checkbox" name="day" value="Saturday">Saturday</td>
-            </tr>
-            <tr>
-                <td><input type="checkbox" name="day" value="Sunday">Sunday</td>
-                <td colspan="2"><button type="submit" name="addBtn">Submit</button></td>
-            </tr>
-        </table>
-<!--        {{#each weekDays}}-->
-<!--            <tr>-->
-<!--                <td>-->
-<!--                    <input type="checkbox" name="{{day}}" value="{{id}}"><span>Monday</span>-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                    <input type="checkbox" name="{{day}}" value="{{id}}"><span>Tuesday</span>-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                    <input type="checkbox" name="{{day}}" value="{{id}}"><span>Wednesday</span>-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                    <input type="checkbox" name="{{day}}" value="{{id}}"><span>Thursday</span>-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                    <input type="checkbox" name="{{day}}" value="{{id}}"><span>Friday</span>-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                    <input type="checkbox" name="{{day}}" value="{{id}}"><span>Saturday</span>-->
-<!--                </td>-->
-<!--                <td>-->
-<!--                    <input type="checkbox" name="{{day}}" value="{{id}}"><span>Sunday</span>-->
-<!--                </td>-->
-<!--            </tr>-->
-<!--        {{/each}}-->
     </form>
-
-        <form action="/shift" method="get">
-            <button type="submit">View Shifts</button>
-        </form>
 </div>
 </body>
 </html>

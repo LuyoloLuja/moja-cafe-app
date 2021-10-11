@@ -5,6 +5,8 @@ import org.jdbi.v3.core.Jdbi;
 import spark.ModelAndView;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
+
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -37,39 +39,77 @@ public class App {
                 "FOREIGN KEY (waiter_id) REFERENCES Waiter(id), " +
                 "FOREIGN KEY (day_id) REFERENCES Day(id))");
 
+
+//        String[] weekDays = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+//        Arrays.asList(weekDays).forEach( day -> {
+//            handle.execute("insert into Day (day) values (?)", day);
+//        } );
+
+
         get("/", (req, res) -> {
             Map<String, Object> map = new HashMap<>();
 
             return new ModelAndView(map, "home.handlebars");
         }, new HandlebarsTemplateEngine());
 
+
+        get("/waiter/:username", (req, res) -> {
+            String username = req.params("username");
+
+            Map<String, Object> map = new HashMap<>();
+            map.put("username", username);
+
+            return new ModelAndView(map, "home.handlebars");
+
+        }, new HandlebarsTemplateEngine());
+
+
+
         post("/waiter/:username", (req, res) -> {
             Map<String, Object> map = new HashMap<>();
 
             String username = req.queryParams("username");
-            String day = req.queryParams("day");
+            String[] days = req.queryParamsValues("day");
 
             username = username.substring(0,1).toUpperCase() + username.substring(1).toLowerCase();
 
-            Logic logic = new Logic(username, day);
+            // find the user id from the username
+            int waiterCount = handle.select("SELECT count(*) FROM Waiter where name = ?", username)
+                    .mapTo(Integer.class)
+                    .findOnly();
 
-            Integer checkName = handle.select("SELECT COUNT(*) FROM Waiter WHERE name = ?", logic.getName()).mapTo(int.class).findOnly();
-            Integer checkDay = handle.select("SELECT COUNT(*) FROM DAY WHERE day = ?", logic.getDay()).mapTo(int.class).findOnly();
-
-            if (checkName == 0 && checkDay != null ) {
-                handle.execute("INSERT INTO Waiter (name) VALUES (?)", username);
+            // add the waiter if it doesn't exist
+            if (waiterCount == 0 ){
+                handle.execute("INSERT INTO Waiter (name) VALUES (?)",
+                        username);
             }
-            // not inserting correctly
-            handle.execute("INSERT INTO Waiter_Shift (waiter_id, day_id) VALUES (?, ?)", checkName, checkDay);
 
-            // throws an error
-            List<String> days = handle.select("SELECT * FROM Day").mapToBean(String.class).list();
+            Waiter waiter = handle.select("SELECT * FROM Waiter where name = ?", username)
+                    .mapToBean(Waiter.class)
+                    .findOnly();
 
-            map.put("name", username);
-            map.put("days", days.size());
-            return new ModelAndView(map , "waiter.handlebars");
+            for (String dayName : days) {
+                // find the day id for each day
+                System.out.println(dayName);
 
-        }, new HandlebarsTemplateEngine());
+                Day day = handle.select("SELECT * FROM Day WHERE day = ?", dayName)
+                        .mapToBean(Day.class)
+                        .findOnly();
+
+                handle.execute("INSERT INTO Waiter_Shift (waiter_id, day_id) VALUES (?, ?)",
+                                    waiter.getId(),
+                                    day.getId());
+            }
+
+
+//            map.put("name", username);
+//
+//            return new ModelAndView(map , "waiter.handlebars");
+
+            res.redirect("/shift");
+            return "";
+
+        });
 
         get("/waiter", (req, res) -> {
             Map<String, String> map = new HashMap<>();
@@ -80,7 +120,22 @@ public class App {
         get("/shift", (req, res) -> {
             Map<String, Object> map = new HashMap<>();
 
+            List<Shift> shifts = handle.select(
+                        "select name as waiterName, day as dayName from Waiter_shift " +
+                                "join Waiter on waiter_id = Waiter.id " +
+                                "join Day on day_id = Day.id  ;\n")
+                    .mapToBean(Shift.class)
+                    .list();
+
+            map.put("shifts", shifts);
+
+
+
+
             return new ModelAndView(map, "shift.handlebars");
         }, new HandlebarsTemplateEngine());
     }
 }
+
+
+
