@@ -6,6 +6,21 @@
           content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Individual Shift</title>
+
+    <style>
+        button {
+            border: none;
+            background-color: #7FC086;
+            color: #073140;
+            margin: 2em auto;
+            padding: 1em 4.5em;
+            text-align: center;
+            display: block;
+            font-size:18px;
+            border-radius: 1em;
+            cursor: pointer;
+        }
+    </style>
 </head>
 <body>
 <div class="container">
@@ -13,25 +28,37 @@
         <h1>{{name}}'s Shifts</h1>
         <table>
             <tr>
+                <td>Name</td>
                 <td>Days Working</td>
-                <td>Shifts Working</td>
             </tr>
             <tr>
-                <td>Tuesday</td>
+                <td>{{name}}</td>
                 <td>
-                    <span>06h00 - 14h00</span>
+                    <span>Monday</span>
                 </td>
             </tr>
             <tr>
-                <td>Wednesday</td>
+                <td></td>
                 <td>
-                    <span>06h00 - 14h00</span>
+                    <span>Tuesday</span>
                 </td>
             </tr>
             <tr>
-                <td>Friday</td>
+                <td></td>
                 <td>
-                    <span>14h00 - 20h00</span>
+                    <span>Thursday</span>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <span>Friday</span>
+                </td>
+            </tr>
+            <tr>
+                <td></td>
+                <td>
+                    <span>Sunday</span>
                 </td>
             </tr>
         </table>
