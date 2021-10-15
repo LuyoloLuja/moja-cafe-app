@@ -39,19 +39,16 @@ public class App {
                 "FOREIGN KEY (waiter_id) REFERENCES Waiter(id), " +
                 "FOREIGN KEY (day_id) REFERENCES Day(id))");
 
-
 //        String[] weekDays = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
 //        Arrays.asList(weekDays).forEach( day -> {
 //            handle.execute("insert into Day (day) values (?)", day);
 //        } );
-
 
         get("/", (req, res) -> {
             Map<String, Object> map = new HashMap<>();
 
             return new ModelAndView(map, "home.handlebars");
         }, new HandlebarsTemplateEngine());
-
 
         get("/waiter/:username", (req, res) -> {
             String username = req.params("username");
@@ -62,8 +59,6 @@ public class App {
             return new ModelAndView(map, "home.handlebars");
 
         }, new HandlebarsTemplateEngine());
-
-
 
         post("/waiter/:username", (req, res) -> {
             Map<String, Object> map = new HashMap<>();
@@ -101,14 +96,8 @@ public class App {
                                     day.getId());
             }
 
-
-//            map.put("name", username);
-//
-//            return new ModelAndView(map , "waiter.handlebars");
-
             res.redirect("/shift");
             return "";
-
         });
 
         get("/waiter", (req, res) -> {
@@ -128,9 +117,6 @@ public class App {
                     .list();
 
             map.put("shifts", shifts);
-
-
-
 
             return new ModelAndView(map, "shift.handlebars");
         }, new HandlebarsTemplateEngine());
