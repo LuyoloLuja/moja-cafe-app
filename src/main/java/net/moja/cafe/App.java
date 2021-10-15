@@ -61,7 +61,6 @@ public class App {
         }, new HandlebarsTemplateEngine());
 
         post("/waiter/:username", (req, res) -> {
-            Map<String, Object> map = new HashMap<>();
 
             String username = req.queryParams("username");
             String[] days = req.queryParamsValues("day");
@@ -85,8 +84,6 @@ public class App {
 
             for (String dayName : days) {
                 // find the day id for each day
-                System.out.println(dayName);
-
                 Day day = handle.select("SELECT * FROM Day WHERE day = ?", dayName)
                         .mapToBean(Day.class)
                         .findOnly();
