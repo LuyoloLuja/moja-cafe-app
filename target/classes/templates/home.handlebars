@@ -77,105 +77,38 @@ button:hover {
 .container table input {
     cursor: pointer;
 }
-.message {
-    font-size: 20px;
-    color: #62C274;
-    width: fit-content;
-    border: 1px solid #62C274;
-    margin: 0 auto;
-    padding: 5px 30px ;
-    border-radius: 5px;
-}
-.fit {
-    background-color: #293745;
-    width: 70%;
-    margin: 0 auto;
-    height: 100%;
-}
-
-.fit h1 {
-    font-size: 56px;
-    font-weight: lighter;
-    text-align: center;
-}
-
-.daysContent {
-    width: 60%;
-    margin: 0em auto;
-    border: 1px solid #293745;
-}
-
-.color {
-    float: right;
-    margin-bottom: 2em;
-}
-
-.color .example {
-    width: 10px;
-    height: 10px;
-    display: inline-block;
-    border-radius: 50%;
-    margin-right: 5px;
-}
-
-.red {
-    background-color: red;
-}
-
-.green {
-    background-color: green;
-}
-
-.yellow {
-    background-color:  #ffa500;
-}
+.content h4 {text-align: center;}
     </style>
 </head>
 <body>
 <div class="container">
-        <h1>Moja Cafe'</h1>
+    <form action="/waiter/{{username}}" method="POST">
+        <div class="content">
+            <h1>Moja Cafe'</h1>
+            <label for="">
+                <input type="text" name="username" placeholder="Please Enter Your Name" value="{{username}}">
+            </label>
 
-<!--        <div class="key">-->
-<!--            <div>-->
-<!--                <div class="example" style="background-color: #ff0000;"></div>Fully Booked-->
-<!--            </div>-->
-<!--            <div>-->
-<!--                <div class="example" style="background-color: #ffa500;"></div>Almost Fully Booked-->
-<!--            </div>-->
-<!--            <div>-->
-<!--                <div class="example" style="background-color: #008000;"></div>Space Available-->
-<!--            </div>-->
-<!--        </div>-->
+            <h4>Select Your Working Days</h4>
 
-    <form action="/waiter" method="post">
-        <div class="container">
-                <div class="content">
-                    <h1>Moja Cafe'</h1>
-                    <label for=""><input type="text" name="username" placeholder="Please Enter Your Name"
-                                         value="{{name}}"></label>
-                    <table>
-                        <tr>
-                            <td><input type="checkbox" name="day" value="Monday">Monday</td>
-                            <td><input type="checkbox" name="day" value="Tuesday">Tuesday</td>
-                            <td><input type="checkbox" name="day" value="Wednesday">Wednesday</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" name="day" value="Thursday">Thursday</td>
-                            <td><input type="checkbox" name="day" value="Friday">Friday</td>
-                            <td><input type="checkbox" name="day" value="Saturday">Saturday</td>
-                        </tr>
-                        <tr>
-                            <td><input type="checkbox" name="day" value="Sunday">Sunday</td>
-                            <td colspan="2"><button type="submit" name="addBtn">Submit</button></td>
-                        </tr>
-                    </table>
-                </div>
+            <table>
+                <tr>
+                    <td><input type="checkbox" name="day" value="Monday">Monday</td>
+                    <td><input type="checkbox" name="day" value="Tuesday">Tuesday</td>
+                    <td><input type="checkbox" name="day" value="Wednesday">Wednesday</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="day" value="Thursday">Thursday</td>
+                    <td><input type="checkbox" name="day" value="Friday">Friday</td>
+                    <td><input type="checkbox" name="day" value="Saturday">Saturday</td>
+                </tr>
+                <tr>
+                    <td><input type="checkbox" name="day" value="Sunday">Sunday</td>
+                    <td colspan="2"><button type="submit">Submit</button></td>
+                </tr>
+            </table>
         </div>
     </form>
-
-<!--        <form action="/shift" method="get">-->
-<!--            <button type="submit">View Shifts</button>-->
-<!--        </form>-->
 </div>
 </body>
 </html>

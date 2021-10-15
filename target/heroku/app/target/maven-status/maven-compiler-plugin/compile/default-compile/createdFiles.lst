@@ -1,2 +1,5 @@
-App.class
-Logic.class
+net/moja/cafe/Waiter.class
+net/moja/cafe/Shift.class
+net/moja/cafe/Logic.class
+net/moja/cafe/Day.class
+net/moja/cafe/App.class

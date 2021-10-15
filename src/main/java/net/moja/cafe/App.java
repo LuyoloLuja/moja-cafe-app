@@ -1,9 +1,14 @@
 package net.moja.cafe;
 
+import org.jdbi.v3.core.Handle;
+import org.jdbi.v3.core.Jdbi;
 import spark.ModelAndView;
 import spark.Spark;
 import spark.template.handlebars.HandlebarsTemplateEngine;
+
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 import static spark.Spark.*;
@@ -20,40 +25,94 @@ public class App {
     public static void main(String[] args) {
         port(getHerokuAssignedPort());
         Spark.staticFiles.location("/public");
-        Logic logic = new Logic();
+
+        String dbDiskURL = "jdbc:sqlite:file:./mojaCafeDB.db";
+        Jdbi jdbi = Jdbi.create(dbDiskURL);
+        Handle handle = jdbi.open();
+
+        handle.execute("CREATE TABLE IF NOT EXISTS Waiter (id INTEGER NOT NULL PRIMARY KEY, name TEXT)");
+        handle.execute("CREATE TABLE IF NOT EXISTS Day (id INTEGER NOT NULL PRIMARY KEY, day TEXT)");
+
+        handle.execute("CREATE TABLE IF NOT EXISTS Waiter_Shift " +
+                "(id INTEGER NOT NULL PRIMARY KEY, " +
+                "waiter_id INTEGER, day_id INTEGER, " +
+                "FOREIGN KEY (waiter_id) REFERENCES Waiter(id), " +
+                "FOREIGN KEY (day_id) REFERENCES Day(id))");
+
+
+//        String[] weekDays = {"Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"};
+//        Arrays.asList(weekDays).forEach( day -> {
+//            handle.execute("insert into Day (day) values (?)", day);
+//        } );
+
 
         get("/", (req, res) -> {
             Map<String, Object> map = new HashMap<>();
+
             return new ModelAndView(map, "home.handlebars");
         }, new HandlebarsTemplateEngine());
 
-        post("/waiter", (req, res) -> {
-            Map<String, String> map = new HashMap<>();
 
-            String username = req.queryParams("username");
-            String day = req.queryParams("day");
-            username = username.substring(0,1).toUpperCase() + username.substring(1).toLowerCase();
+        get("/waiter/:username", (req, res) -> {
+            String username = req.params("username");
 
-            if (!username.equals("") && day != null) {
-                logic.addWaiterDetails(username, day);
-            }
+            Map<String, Object> map = new HashMap<>();
+            map.put("username", username);
 
-            map.put("name", username);
-            map.put("day", day);
-            return new ModelAndView(map, "waiter.handlebars");
+            return new ModelAndView(map, "home.handlebars");
 
         }, new HandlebarsTemplateEngine());
 
-        get("/waiter/:username", (req, res) -> {
+
+
+        post("/waiter/:username", (req, res) -> {
+            Map<String, Object> map = new HashMap<>();
+
+            String username = req.queryParams("username");
+            String[] days = req.queryParamsValues("day");
+
+            username = username.substring(0,1).toUpperCase() + username.substring(1).toLowerCase();
+
+            // find the user id from the username
+            int waiterCount = handle.select("SELECT count(*) FROM Waiter where name = ?", username)
+                    .mapTo(Integer.class)
+                    .findOnly();
+
+            // add the waiter if it doesn't exist
+            if (waiterCount == 0 ){
+                handle.execute("INSERT INTO Waiter (name) VALUES (?)",
+                        username);
+            }
+
+            Waiter waiter = handle.select("SELECT * FROM Waiter where name = ?", username)
+                    .mapToBean(Waiter.class)
+                    .findOnly();
+
+            for (String dayName : days) {
+                // find the day id for each day
+                System.out.println(dayName);
+
+                Day day = handle.select("SELECT * FROM Day WHERE day = ?", dayName)
+                        .mapToBean(Day.class)
+                        .findOnly();
+
+                handle.execute("INSERT INTO Waiter_Shift (waiter_id, day_id) VALUES (?, ?)",
+                                    waiter.getId(),
+                                    day.getId());
+            }
+
+
+//            map.put("name", username);
+//
+//            return new ModelAndView(map , "waiter.handlebars");
+
+            res.redirect("/shift");
+            return "";
+
+        });
+
+        get("/waiter", (req, res) -> {
             Map<String, String> map = new HashMap<>();
-
-            String name = req.queryParams("username");
-            String day = req.queryParams("day");
-
-            logic.addWaiterDetails(name, day);
-//            int singleWaiterDetails = logic.getSingleWaiterDetails(name);
-//            map.put("singleWaiterDetails", singleWaiterDetails);
-            map.put("name", name);
 
             return new ModelAndView(map, "waiter.handlebars");
         }, new HandlebarsTemplateEngine());
@@ -61,9 +120,22 @@ public class App {
         get("/shift", (req, res) -> {
             Map<String, Object> map = new HashMap<>();
 
-            map.put("displayShifts", logic.getWaiterDetails());
+            List<Shift> shifts = handle.select(
+                        "select name as waiterName, day as dayName from Waiter_shift " +
+                                "join Waiter on waiter_id = Waiter.id " +
+                                "join Day on day_id = Day.id  ;\n")
+                    .mapToBean(Shift.class)
+                    .list();
+
+            map.put("shifts", shifts);
+
+
+
 
             return new ModelAndView(map, "shift.handlebars");
         }, new HandlebarsTemplateEngine());
     }
 }
+
+
+

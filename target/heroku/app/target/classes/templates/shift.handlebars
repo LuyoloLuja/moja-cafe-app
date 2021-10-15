@@ -98,67 +98,81 @@
     </div>
     </header>
 
-    <table>
-        <tr class="details">
-            <td>Employee Name</td>
-            <td style="text-align: center;">Days</td>
-            <td>Hours/Day</td>
-            <td>Hours/Week</td>
-        </tr>
-        <tr class="blue-bar">
-            <td colspan=4></td>
-        </tr>
-        <tr class="waiter-days">
-            <td>Luyolo</td>
-            <td>
-                <ul>
-                    <li>Monday</li>
-                    <li>Tuesday</li>
-                    <li>Wednesday</li>
-                    <li>Thursday</li>
-                    <li>Friday</li>
-                    <li>Saturday</li>
-                    <li>Sunday</li>
-                </ul>
-            </td>
-            <td>18</td>
-            <td>9</td>
-        </tr>
-        <tr class="waiter-days">
-            <td>Salizwa</td>
-            <td>
-                <ul>
-                    <li>Monday</li>
-                    <li>Tuesday</li>
-                    <li>Wednesday</li>
-                    <li>Thursday</li>
-                    <li>Friday</li>
-                    <li>Saturday</li>
-                    <li>Sunday</li>
-                </ul>
-            </td>
-            <td>36</td>
-            <td>9</td>
-        </tr>
-        <tr class="waiter-days">
-            <td>Simthe</td>
-            <td>
-                <ul>
-                    <li>Monday</li>
-                    <li>Tuesday</li>
-                    <li>Wednesday</li>
-                    <li>Thursday</li>
-                    <li>Friday</li>
-                    <li>Saturday</li>
-                    <li>Sunday</li>
-                </ul>
-            </td>
-            <td>45</td>
-            <td>9</td>
-        </tr>
-    </table>
+<!--    <table>-->
+<!--        <tr class="details">-->
+<!--            <td>Employee Name</td>-->
+<!--            <td style="text-align: center;">Days</td>-->
+<!--            <td>Hours/Day</td>-->
+<!--            <td>Hours/Week</td>-->
+<!--        </tr>-->
+<!--        <tr class="blue-bar">-->
+<!--            <td colspan=4></td>-->
+<!--        </tr>-->
+<!--        <tr class="waiter-days">-->
+<!--            <td>Luyolo</td>-->
+<!--            <td>-->
+<!--                <ul>-->
+<!--                    <li>Monday</li>-->
+<!--                    <li>Tuesday</li>-->
+<!--                    <li>Wednesday</li>-->
+<!--                    <li>Thursday</li>-->
+<!--                    <li>Friday</li>-->
+<!--                    <li>Saturday</li>-->
+<!--                    <li>Sunday</li>-->
+<!--                </ul>-->
+<!--            </td>-->
+<!--            <td>18</td>-->
+<!--            <td>9</td>-->
+<!--        </tr>-->
+<!--        <tr class="waiter-days">-->
+<!--            <td>Salizwa</td>-->
+<!--            <td>-->
+<!--                <ul>-->
+<!--                    <li>Monday</li>-->
+<!--                    <li>Tuesday</li>-->
+<!--                    <li>Wednesday</li>-->
+<!--                    <li>Thursday</li>-->
+<!--                    <li>Friday</li>-->
+<!--                    <li>Saturday</li>-->
+<!--                    <li>Sunday</li>-->
+<!--                </ul>-->
+<!--            </td>-->
+<!--            <td>36</td>-->
+<!--            <td>9</td>-->
+<!--        </tr>-->
+<!--        <tr class="waiter-days">-->
+<!--            <td>Simthe</td>-->
+<!--            <td>-->
+<!--                <ul>-->
+<!--                    <li>Monday</li>-->
+<!--                    <li>Tuesday</li>-->
+<!--                    <li>Wednesday</li>-->
+<!--                    <li>Thursday</li>-->
+<!--                    <li>Friday</li>-->
+<!--                    <li>Saturday</li>-->
+<!--                    <li>Sunday</li>-->
+<!--                </ul>-->
+<!--            </td>-->
+<!--            <td>45</td>-->
+<!--            <td>9</td>-->
+<!--        </tr>-->
+<!--    </table>-->
 
-    <button type="submit">Back</button>
+
+
+    <form action="/">
+        <table>
+        <tr>
+            {{#each shifts}}
+                <th>{{dayName}}</th>
+                <td>{{waiterName}}</td>
+            </tr>
+            {{/each}}
+
+        </table>
+
+        <button type="submit">Back</button>
+    </form>
 </div>
 </body>
 </html>
