@@ -61,7 +61,11 @@ label input {
     border-bottom: 1px solid #fff;
     padding: 20px;
 }
-button {
+a {
+    text-decoration: none;
+    width: 100%;
+}
+a, button {
     width: 100%;
     padding: 10px;
     border: none;
@@ -71,7 +75,7 @@ button {
     color: #293745;
     cursor: pointer;
 }
-button:hover {
+a:hover, button:hover {
     border: 1px solid #fff;
 }
 .container table input {
@@ -104,7 +108,8 @@ button:hover {
                 </tr>
                 <tr>
                     <td><input type="checkbox" name="day" value="Sunday">Sunday</td>
-                    <td colspan="2"><button type="submit">Submit</button></td>
+                    <td><a href="/shift">View All Shifts</a></td>
+                    <td><button type="submit">Submit</button></td>
                 </tr>
             </table>
         </div>

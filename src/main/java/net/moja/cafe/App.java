@@ -62,6 +62,7 @@ public class App {
 
         post("/waiter/:username", (req, res) -> {
 
+            Map<String, String> map = new HashMap<>();
             String username = req.queryParams("username");
             String[] days = req.queryParamsValues("day");
 
@@ -93,9 +94,8 @@ public class App {
                                     day.getId());
             }
 
-            res.redirect("/shift");
-            return "";
-        });
+            return new ModelAndView(map, "home.handlebars");
+        }, new HandlebarsTemplateEngine());
 
         get("/waiter", (req, res) -> {
             Map<String, String> map = new HashMap<>();
@@ -107,9 +107,9 @@ public class App {
             Map<String, Object> map = new HashMap<>();
 
             List<Shift> shifts = handle.select(
-                        "select name as waiterName, day as dayName from Waiter_shift " +
-                                "join Waiter on waiter_id = Waiter.id " +
-                                "join Day on day_id = Day.id  ;\n")
+                        "SELECT name AS waiterName, day as dayName FROM Waiter_shift " +
+                                "JOIN Waiter ON waiter_id = Waiter.id " +
+                                "JOIN Day ON day_id = Day.id")
                     .mapToBean(Shift.class)
                     .list();
 
