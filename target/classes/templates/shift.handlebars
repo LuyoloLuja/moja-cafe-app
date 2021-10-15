@@ -158,12 +158,14 @@
 <!--        </tr>-->
 <!--    </table>-->
 
+
+
     <form action="/">
         <table>
         <tr>
-            {{#each displayShifts}}
-                <th>{{day}}</th>
-                <td>{{name}}</td>
+            {{#each shifts}}
+                <th>{{waiterName}}</th>
+                <td>{{dayName}}</td>
             </tr>
             {{/each}}
 

@@ -37,6 +37,10 @@ public class Logic {
     public int getDayId() {
         return dayId;
     }
+
+
+
+
 //    public void addWaiterDetails(String name, String day) {
 //        name = name.substring(0,1).toUpperCase() + name.substring(1).toLowerCase();
 //
@@ -73,7 +77,7 @@ public class Logic {
 //
 //    public int getSingleWaiterDetails(String name) {
 //        int waiterId = getNameId(name);
-//        return handle.execute("SELECT day_id FROM Waiter_Shift WHERE waiter_id = ?", waiterId);
+//        return handle.execute("SELECT name_id, day_id FROM Waiter_Shift WHERE waiter_id = ?", waiterId);
 //    }
 //
 //    public void getDays() {
